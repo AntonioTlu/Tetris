@@ -1,6 +1,5 @@
 import pygame
-from grid import Grid
-from blocks import *
+from game import Game
 
 # important variables
 SCREEN_WIDTH = 300
@@ -11,16 +10,13 @@ DARK_BLUE = (44, 44, 127)
 pygame.init()
 
 
-
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("Tetris")
 
 clock = pygame.time.Clock()
 running = True
 
-game_grid = Grid()
-
-block = OBlock()
+game = Game()
 
 while running:
     # poll for events
@@ -31,8 +27,7 @@ while running:
 
     # fill the screen with a color to wipe away anything from last frame
     screen.fill(DARK_BLUE)
-    game_grid.draw(screen)
-    block.draw(screen)
+    game.draw(screen)
 
     pygame.display.update()
     clock.tick(60)  # limits FPS to 60
