@@ -1,4 +1,4 @@
-import pygame
+import pygame, sys
 from game import Game
 
 # important variables
@@ -14,16 +14,25 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("Tetris")
 
 clock = pygame.time.Clock()
-running = True
 
 game = Game()
 
-while running:
+while True:
     # poll for events
     # pygame.QUIT event means the user clicked X to close your window
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            running = False
+            pygame.quit()
+            sys.exit()
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_LEFT:
+                game.move_left()
+            if event.key == pygame.K_RIGHT:
+                game.move_right()
+            if event.key == pygame.K_DOWN:
+                game.move_down()
+            if event.key == pygame.K_UP:
+                game.rotate()
 
     # fill the screen with a color to wipe away anything from last frame
     screen.fill(DARK_BLUE)
