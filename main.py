@@ -21,15 +21,19 @@ clock = pygame.time.Clock()
 
 game = Game()
 
+interval = 300
+
 GAME_UPDATE = pygame.USEREVENT
-pygame.time.set_timer(GAME_UPDATE, 200)
+pygame.time.set_timer(GAME_UPDATE, interval)
 
 width = screen.get_width()
 height = screen.get_height()
 
+previous_cleared_lines = 0
 
 while True:
     mouse = pygame.mouse.get_pos()
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
@@ -53,6 +57,15 @@ while True:
             if 320 <= mouse[0] <= 490 and 500 <= mouse[1] <= 560:
                 game.reset()
                 game.game_over = False
+
+    cleared_lines = game.get_cleared_line()
+    if interval > 60:
+        if cleared_lines > previous_cleared_lines:
+            previous_cleared_lines = cleared_lines
+            if cleared_lines % 10 == 0:
+                print(cleared_lines)
+                interval -= 20
+                pygame.time.set_timer(GAME_UPDATE, interval)
 
     # Drawing
     score_value_surface = title_font.render(str(game.score), True, Colors.white)
