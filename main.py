@@ -51,6 +51,8 @@ while True:
                 game.update_score(0, 1)
             if event.key == pygame.K_UP and game.game_over == False:
                 game.rotate()
+            if event.key == pygame.K_SPACE and game.game_over == False:
+                game.move_to_bottom()
         if event.type == GAME_UPDATE and game.game_over == False:
             game.move_down()
         if event.type == pygame.MOUSEBUTTONDOWN and game.game_over == True:
@@ -63,7 +65,6 @@ while True:
         if cleared_lines > previous_cleared_lines:
             previous_cleared_lines = cleared_lines
             if cleared_lines % 10 == 0:
-                print(cleared_lines)
                 interval -= 20
                 pygame.time.set_timer(GAME_UPDATE, interval)
 
