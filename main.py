@@ -2,6 +2,7 @@ import pygame, sys
 from game import Game
 from colors import Colors
 from database import Database
+from scoreboard import Scoreboard
 
 db = Database()
 
@@ -16,10 +17,12 @@ score_surface = title_font.render("Score", True, Colors.white)
 next_surface = title_font.render("Next", True, Colors.white)
 game_over_surface = title_font.render("GAME OVER", True, Colors.white)
 start_button_surface = title_font.render("Start", True, Colors.white)
+scoreboard_button_surface = title_font.render("Scores", True, Colors.white)
 
 score_rect = pygame.Rect(320, 55, 170, 60)
-next_rect = pygame.Rect(320, 215, 170, 180)
-start_rect = pygame.Rect(320, 500, 170, 60)
+next_rect = pygame.Rect(320, 185, 170, 180)
+start_rect = pygame.Rect(320, 450, 170, 60)
+scoreboard_rect = pygame.Rect(320, 530, 170, 60)
 
 screen = pygame.display.set_mode((500, 620))
 pygame.display.set_caption("Python Tetris")
@@ -27,6 +30,7 @@ pygame.display.set_caption("Python Tetris")
 clock = pygame.time.Clock()
 
 game = Game()
+scoreboard = Scoreboard()
 
 interval = 300
 
@@ -40,6 +44,7 @@ previous_cleared_lines = 0
 
 only_save_once = 0
 
+
 while True:
     mouse = pygame.mouse.get_pos()
 
@@ -48,10 +53,6 @@ while True:
             pygame.quit()
             sys.exit()
         if event.type == pygame.KEYDOWN:
-            if game.game_over == True:
-                game.game_over = False
-                only_save_once = 0
-                game.reset()
             if event.key == pygame.K_LEFT and game.game_over == False:
                 game.move_left()
             if event.key == pygame.K_RIGHT and game.game_over == False:
@@ -67,10 +68,13 @@ while True:
         if event.type == GAME_UPDATE and game.game_over == False:
             game.move_down()
         if event.type == pygame.MOUSEBUTTONDOWN and game.game_over == True:
-            if 320 <= mouse[0] <= 490 and 500 <= mouse[1] <= 560:
+            if 320 <= mouse[0] <= 490 and 450 <= mouse[1] <= 510:
                 game.game_over = False
                 only_save_once = 0
                 game.reset()
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if 320 <= mouse[0] <= 490 and 530 <= mouse[1] <= 590:
+                scoreboard.show_highscore_screen(screen, width)
 
     cleared_lines = game.get_cleared_line()
     if interval > 60:
@@ -85,15 +89,17 @@ while True:
 
     screen.fill(Colors.dark_blue)
     screen.blit(score_surface, (365, 20, 50, 50))
-    screen.blit(next_surface, (375, 180, 50, 50))
+    screen.blit(next_surface, (375, 150, 50, 50))
+    pygame.draw.rect(screen, Colors.light_blue, scoreboard_rect, 0, 10)
+    screen.blit(scoreboard_button_surface, (360, 548, 50, 50))
 
     if game.game_over == True:
         if only_save_once == 0:
             db.create_new_score(connection, game.score)
             only_save_once = 1
-        screen.blit(game_over_surface, (320, 450, 50, 50))
+        screen.blit(game_over_surface, (320, 400, 50, 50))
         pygame.draw.rect(screen, Colors.light_blue, start_rect, 0, 10)
-        screen.blit(start_button_surface, (370, 518, 50, 50))
+        screen.blit(start_button_surface, (370, 468, 50, 50))
 
     pygame.draw.rect(screen, Colors.light_blue, score_rect, 0, 10)
     screen.blit(
