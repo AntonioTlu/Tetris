@@ -1,6 +1,13 @@
 import pygame, sys
 from game import Game
 from colors import Colors
+from database import Database
+
+db = Database()
+
+connection = db.create_connection(db.path)
+db.execute_query(connection, db.create_score_table)
+
 
 pygame.init()
 
@@ -31,6 +38,8 @@ height = screen.get_height()
 
 previous_cleared_lines = 0
 
+only_save_once = 0
+
 while True:
     mouse = pygame.mouse.get_pos()
 
@@ -41,6 +50,7 @@ while True:
         if event.type == pygame.KEYDOWN:
             if game.game_over == True:
                 game.game_over = False
+                only_save_once = 0
                 game.reset()
             if event.key == pygame.K_LEFT and game.game_over == False:
                 game.move_left()
@@ -58,8 +68,9 @@ while True:
             game.move_down()
         if event.type == pygame.MOUSEBUTTONDOWN and game.game_over == True:
             if 320 <= mouse[0] <= 490 and 500 <= mouse[1] <= 560:
-                game.reset()
                 game.game_over = False
+                only_save_once = 0
+                game.reset()
 
     cleared_lines = game.get_cleared_line()
     if interval > 60:
@@ -77,6 +88,9 @@ while True:
     screen.blit(next_surface, (375, 180, 50, 50))
 
     if game.game_over == True:
+        if only_save_once == 0:
+            db.create_new_score(connection, game.score)
+            only_save_once = 1
         screen.blit(game_over_surface, (320, 450, 50, 50))
         pygame.draw.rect(screen, Colors.light_blue, start_rect, 0, 10)
         screen.blit(start_button_surface, (370, 518, 50, 50))
