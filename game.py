@@ -66,14 +66,16 @@ class Game:
             self.lock_block()
 
     def move_to_bottom(self):
-        drop_distance = self.calculate_drop_distance()
-        current_block_position = self.current_block.get_cell_positions()
-        for current_block_position[1] in range(drop_distance):
-            self.move_down()
+        points = 0
+        loop = True
+        while loop:
+            self.current_block.move(1, 0)
+            points += 1
             if self.block_inside() == False or self.block_fits() == False:
+                self.current_block.move(-1, 0)
                 self.lock_block()
-                break
-                
+                loop = False
+        return points
 
     def lock_block(self):
         tiles = self.current_block.get_cell_positions()

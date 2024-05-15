@@ -52,7 +52,8 @@ while True:
             if event.key == pygame.K_UP and game.game_over == False:
                 game.rotate()
             if event.key == pygame.K_SPACE and game.game_over == False:
-                game.move_to_bottom()
+                points = game.move_to_bottom()
+                game.update_score(0, points * 2)
         if event.type == GAME_UPDATE and game.game_over == False:
             game.move_down()
         if event.type == pygame.MOUSEBUTTONDOWN and game.game_over == True:
