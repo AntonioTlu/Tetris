@@ -61,4 +61,19 @@ class Database:
         except Error as e:
             print(f"The error '{e}' occurred")
 
-    
+    def execute_read_query(self, connection):
+        cursor = connection.cursor()
+        result = None
+        query = "SELECT * FROM score ORDER BY score DESC LIMIT 15"
+        score_list = []
+        try:
+            cursor.execute(query)
+            result = cursor.fetchall()
+        except Error as e:
+            print(f"The error '{e}' occurred")    
+
+        if result != None:
+            for entry in result:
+                score_list.append(entry)
+            return score_list
+

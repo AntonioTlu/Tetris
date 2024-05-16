@@ -74,7 +74,7 @@ while True:
                 game.reset()
         if event.type == pygame.MOUSEBUTTONDOWN:
             if 320 <= mouse[0] <= 490 and 530 <= mouse[1] <= 590:
-                scoreboard.show_highscore_screen(screen, width)
+                scoreboard.show_highscore_screen(screen, width, connection)
 
     cleared_lines = game.get_cleared_line()
     if interval > 60:
