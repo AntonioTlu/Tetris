@@ -22,7 +22,7 @@ class Scoreboard:
             screen.fill(Colors.dark_blue)
 
             # Draw the highscore screen
-            # This is where you would draw your highscores
+            
             # For now, let's just draw some text
 
             font = pygame.font.Font(None, 36)
