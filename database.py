@@ -4,8 +4,10 @@ from sqlite3 import Error
 
 class Database:
 
+    # Path to the database
     path = "database/database.sqlite"
 
+    # Query to create the score table
     create_score_table = """
         CREATE TABLE IF NOT EXISTS score (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -14,7 +16,15 @@ class Database:
         );
         """
 
+    ### FUNCTIONS ###
     def create_connection(self, path):
+        """Create a database connection to a SQLite database.
+        return: Connection object or None
+
+        Args:
+            - path (str): The path to the SQLite database.
+        """
+
         connection = None
         try:
             connection = sqlite3.connect(path)
@@ -25,6 +35,13 @@ class Database:
         return connection
 
     def execute_query(self, connection, query):
+        """Execute a query on the database.
+
+        Args:
+            - connection (sqlite3.Connection): The connection to the database.
+            - query (str): The query to execute.
+        """
+
         cursor = connection.cursor()
         try:
             cursor.execute(query)
@@ -34,6 +51,13 @@ class Database:
             print(f"The error '{e}' occurred")
 
     def create_new_score(self, connection, score):
+        """Create a new score in the database.
+
+        Args:
+            - connection (sqlite3.Connection): The connection to the database.
+            - score (int): The score to insert into the database.
+        """
+
         cursor = connection.cursor()
         try:
             cursor.execute(
@@ -49,6 +73,12 @@ class Database:
             print(f"The error '{e}' occurred")
 
     def clear_scores(self, connection):
+        """Clear all scores from the database.
+
+        Args:
+            - connection (sqlite3.Connection): The connection to the database.
+        """
+
         cursor = connection.cursor()
         try:
             cursor.execute(
@@ -62,6 +92,13 @@ class Database:
             print(f"The error '{e}' occurred")
 
     def execute_read_query(self, connection):
+        """Execute a read query on the database.
+        return: The result of the query.
+
+        Args:
+            - connection (sqlite3.Connection): The connection to the database.
+        """
+
         cursor = connection.cursor()
         result = None
         query = "SELECT * FROM score ORDER BY score DESC LIMIT 15"
@@ -70,10 +107,9 @@ class Database:
             cursor.execute(query)
             result = cursor.fetchall()
         except Error as e:
-            print(f"The error '{e}' occurred")    
+            print(f"The error '{e}' occurred")
 
         if result != None:
             for entry in result:
                 score_list.append(entry)
             return score_list
-
