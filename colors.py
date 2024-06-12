@@ -1,4 +1,28 @@
 class Colors:
+    """
+    Info:
+    ----------------
+    Colors class is a class that contains the colors of the game.
+
+    Attributes:
+    ----------------
+        - dark_grey (tuple): The dark grey color.
+        - green (tuple): The green color.
+        - red (tuple): The red color.
+        - orange (tuple): The orange color.
+        - yellow (tuple): The yellow color.
+        - purple (tuple): The purple color.
+        - cyan (tuple): The cyan color.
+        - blue (tuple): The blue color.
+        - white (tuple): The white color.
+        - dark_blue (tuple): The dark blue color.
+        - light_blue (tuple): The light blue color.
+
+    Methods:
+    ----------------
+        - get_cell_colors(): Returns the cell colors of the game.
+    """
+
     dark_grey = (26, 31, 40)
     green = (47, 230, 23)
     red = (232, 18, 18)
@@ -13,6 +37,10 @@ class Colors:
 
     @classmethod
     def get_cell_colors(cls):
+        """
+        Info:
+        ----------------
+        Returns (list) the cell colors of the game."""
         return [
             cls.dark_grey,
             cls.green,

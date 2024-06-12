@@ -3,6 +3,19 @@ from sqlite3 import Error
 
 
 class Database:
+    """
+    Info:
+    ----------------
+    Class to handle the database operations.
+
+    Methods:
+    ----------------
+        - create_connection(path): Create a connection to the SQLite database.
+        - execute_query(connection, query): Execute a query on the database.
+        - create_new_score(connection, score): Create a new score in the database.
+        - clear_scores(connection): Clear all scores from the database.
+        - execute_read_query(connection): Execute a read query on the database.
+    """
 
     # Path to the database
     path = "database/database.sqlite"
@@ -18,10 +31,17 @@ class Database:
 
     ### FUNCTIONS ###
     def create_connection(self, path):
-        """Create a database connection to a SQLite database.
-        return: Connection object or None
+        """
+        Info:
+        ----------------
+        Create a database connection to a SQLite database.
+
+        Return:
+        ---------------
+            - Connection object or None
 
         Args:
+        ----------------
             - path (str): The path to the SQLite database.
         """
 
@@ -35,9 +55,13 @@ class Database:
         return connection
 
     def execute_query(self, connection, query):
-        """Execute a query on the database.
+        """
+        Info:
+        ----------------
+        Execute a query on the database.
 
         Args:
+        ----------------
             - connection (sqlite3.Connection): The connection to the database.
             - query (str): The query to execute.
         """
@@ -51,9 +75,13 @@ class Database:
             print(f"The error '{e}' occurred")
 
     def create_new_score(self, connection, score):
-        """Create a new score in the database.
+        """
+        Info:
+        ----------------
+        Create a new score in the database.
 
         Args:
+        ----------------
             - connection (sqlite3.Connection): The connection to the database.
             - score (int): The score to insert into the database.
         """
@@ -73,9 +101,13 @@ class Database:
             print(f"The error '{e}' occurred")
 
     def clear_scores(self, connection):
-        """Clear all scores from the database.
+        """
+        Info:
+        ----------------
+        Clear all scores from the database.
 
         Args:
+        ----------------
             - connection (sqlite3.Connection): The connection to the database.
         """
 
@@ -92,10 +124,17 @@ class Database:
             print(f"The error '{e}' occurred")
 
     def execute_read_query(self, connection):
-        """Execute a read query on the database.
-        return: The result of the query.
+        """
+        Info:
+        ----------------
+        Execute a read query on the database.
+
+        Return:
+        ----------------
+            - The result of the query.
 
         Args:
+        ----------------
             - connection (sqlite3.Connection): The connection to the database.
         """
 

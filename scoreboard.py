@@ -11,27 +11,40 @@ db = Database()
 
 
 class Scoreboard:
+    """
+    Info:
+    ----------------
+    Class to display the highscore screen.
+
+    Methods:
+    ----------------
+        - show_highscore_screen(screen, width, connection): Show the highscore screen with the top 10 scores.
+    """
 
     def show_highscore_screen(self, screen, width, connection):
-        """Show the highscore screen with the top 10 scores.
+        """
+        Info:
+        ----------------
+        Show the highscore screen with the top 10 scores.
 
         Args:
+        ----------------
             - screen (pygame.Surface): The screen to display the highscore screen on.
             - width (int): The width of the screen.
             - connection (sqlite3.Connection): The connection to the database.
 
         """
-        
+
         # Flags
         running = True
         read_once = 0
-        
+
         # Scoreboard loop
         while running:
-            
+
             # Get the mouse position
             mouse = pygame.mouse.get_pos()
-            
+
             # Event Handling
             for event in pygame.event.get():
                 # Quit the game
